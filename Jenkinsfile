@@ -1,17 +1,17 @@
 pipeline {
     agent any
         environment {
-                PROJECT_ID = 'office-412910'
+                PROJECT_ID = 'office-411914'
                 CLUSTER_NAME = 'cluster-1'
                 LOCATION = 'us-central1'
-                CREDENTIALS_ID = 'terraform'
+                CREDENTIALS_ID = 'kubernetes'
         }
 
     stages {
             stage('Build Docker Image') {
                     steps {
                             script {
-                                    sh "docker build -t vengalarao7/dev:${env.BUILD_ID} ."
+                                    sh "docker build -t lokeshtadepalli267/dev:${env.BUILD_ID} ."
                             }
                     }
             }
@@ -22,7 +22,7 @@ pipeline {
                                     echo "Push Docker Image"
                                     withCredentials([string(credentialsId: 'dockerhub', variable: 'dockerhub')]) {
                                         sh "docker login -u vengalarao7 -p ${dockerhub}"
-                                        sh "docker push vengalarao7/dev:${env.BUILD_ID}"
+                                        sh "docker push lokeshtadepalli267/dev:${env.BUILD_ID}"
                                     }
                             }
                     }
